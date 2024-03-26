@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, FieldArray, ErrorMessage } from "formik";
 import { useNavigate, Link } from "react-router-dom";
 import { useCompras } from "../../context/compras/ComprasProvider";
@@ -14,51 +14,14 @@ const fetchData = async (url) => {
     return [];
   }
 };
+
 const ComprasForm = () => {
   const { createCompra, searchFact } = useCompras();
   const [materiales, setMateriales] = useState([]);
   const [proveedores, setProveedores] = useState([]);
   const navigate = useNavigate();
 
-
-  const alertConfirm = (type) => {
-    var message = ""
-    if (type == "update") {
-      message = "Actualizado"
-    } else {
-      message = "Agregado"
-    }
-    $.confirm({
-      title: `Compra  agregada con exito!`,
-      content: "",
-      icon: 'fa fa-check',
-      theme: 'modern',
-      closeIcon: true,
-      animation: 'zoom',
-      closeAnimation: 'scale',
-      animationSpeed: 1500,
-      type: 'green',
-      columnClass: 'col-md-6 col-md-offset-3',
-      autoClose: 'okay|4000',
-      buttons: {
-        okay: function () {
-        },
-      }
-    })
-  }
-
-
   const [totalGeneral, setTotalGeneral] = useState(0);
-
-  const calcularTotalGeneral = (detalles) => {
-    let total = 0;
-    detalles.forEach((detalle) => {
-      const subtotal = detalle.cantidad * detalle.precio;
-      total += subtotal;
-    });
-    setTotalGeneral(total);
-  };
-
 
   const initialValues = {
     fecha: "",
@@ -84,19 +47,23 @@ const ComprasForm = () => {
       setProveedores(data);
     });
   }, []);
+
   const [selectedMaterials, setSelectedMaterials] = useState([]);
 
-  // Function to update selected materials array
   const updateSelectedMaterials = (index, materialId) => {
     const newSelectedMaterials = [...selectedMaterials];
     newSelectedMaterials[index] = materialId;
     setSelectedMaterials(newSelectedMaterials);
   };
 
-  useEffect(() => {
-    calcularTotalGeneral(initialValues.detalles);
-  }, []);
-  // console.clear()
+  const handleMaterialSelection = (index, materialId) => {
+    if (selectedMaterials.includes(materialId)) {
+      console.log("Material already selected");
+    } else {
+      updateSelectedMaterials(index, materialId);
+    }
+  };
+
   return (
     <div className="container">
       <Formik
@@ -235,7 +202,7 @@ const ComprasForm = () => {
                                     precio: "",
                                     subtotal: "",
                                   });
-                                  updateSelectedMaterials(index, e.target.value);
+                                  handleMaterialSelection(index, e.target.value);
                                 }}
                               >
                                 <option value="">Seleccione un material</option>
@@ -365,12 +332,12 @@ const ComprasForm = () => {
                     </button>
                   </div>
                   <div className="col-md-6">
-                  <Link type="button" href="" className="btn btn-danger btn-icon-split w-50" to="/compras">
-                          <span className="text-white-50">
-                            <i className="fa-solid fa-x"></i>
-                          </span>
-                          <span className="text">Cancelar</span>
-                  </Link>
+                    <Link type="button" href="" className="btn btn-danger btn-icon-split w-50" to="/compras">
+                      <span className="text-white-50">
+                        <i className="fa-solid fa-x"></i>
+                      </span>
+                      <span className="text">Cancelar</span>
+                    </Link>
                   </div>
                 </div>
               </div>
