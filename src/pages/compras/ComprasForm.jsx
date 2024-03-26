@@ -23,6 +23,16 @@ const ComprasForm = () => {
 
   const [totalGeneral, setTotalGeneral] = useState(0);
 
+  const calcularTotalGeneral = (detalles) => {
+    let total = 0;
+    detalles.forEach((detalle) => {
+      const subtotal = detalle.cantidad * detalle.precio;
+      total += subtotal;
+    });
+    setTotalGeneral(total);
+  };
+
+
   const initialValues = {
     fecha: "",
     imagen: "",
@@ -63,7 +73,9 @@ const ComprasForm = () => {
       updateSelectedMaterials(index, materialId);
     }
   };
-
+  useEffect(() => {
+    calcularTotalGeneral(initialValues.detalles);
+  }, []);
   return (
     <div className="container">
       <Formik
