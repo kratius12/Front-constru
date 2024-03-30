@@ -395,13 +395,41 @@ const ObraDetalle = () => {
                 validateOnBlur={false}
                 onSubmit={(values, { setSubmitting }) => {
                     var is = false
+                    var otis = false
+                    var ottis = false
+                    if(actividades.length == 0){
+                        otis = true
+                    }
                     actividades.forEach((actividad) => {
                         if (actividad.detalleObra.estado != "Terminada") {
                             is = true
-                            console.log(actividad.detalleObra.estado)
                         }
+                        if(actividad.detalleObra.estado == "En curso"){
+                            ottis = true
+                        }
+                        
                     })
-                    if (values.estado == "Terminado" && is == true) {
+
+                    if(values.estado ==  "Pendiente" || values.estado=="En asesoria" && ottis == true){
+                        $.confirm({
+                            title: `Error`,
+                            content: `La obra no puede estar en estado ${values.estado} si hay actividades en curso`,
+                            icon: 'fa fa-circle-xmark',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'zoom',
+                            closeAnimation: 'scale',
+                            animationSpeed: 500,
+                            type: 'red',
+                            columnClass: 'col-md-6 col-md-offset-3',
+                            buttons: {
+                                Cerrar: function () {
+                                },
+                            }
+                        });
+                        setSubmitting(false)
+                    }
+                    else if (values.estado == "Terminado" && is == true) {
                         // Mostrar la alerta indicando que hay actividades pendientes
                         $.confirm({
                             title: `Error`,
@@ -420,7 +448,27 @@ const ObraDetalle = () => {
                             }
                         });
                         setSubmitting(false)
-                    } else {
+                    } else if(otis==true  && values.estado=="Terminado"){
+                        $.confirm({
+                            title: `Error`,
+                            content: `No se puede cambiar el estado de la obra a "Terminado" si no hay actividades asociadas a la obra`,
+                            icon: 'fa fa-circle-xmark',
+                            theme: 'modern',
+                            closeIcon: true,
+                            animation: 'zoom',
+                            closeAnimation: 'scale',
+                            animationSpeed: 500,
+                            type: 'red',
+                            columnClass: 'col-md-6 col-md-offset-3',
+                            buttons: {
+                                Cerrar: function () {
+                                },
+                            }
+                        });
+                        setSubmitting(false)
+                    }                   
+                    
+                    else {
                         setSubmitting(true)
                         updateObra(id, values)
                         alertConfirm("update")
@@ -520,7 +568,7 @@ const ObraDetalle = () => {
                                         }
                                     </div>
                                     <div className='col-md-3 mt-3 mx-auto'>
-                                        <label htmlFor="precio">Ingrese el precio de la obra</label>
+                                        <label htmlFor="precio">Ingrese el presupuesto de la obra</label>
                                         <Field type="text" name="precio" label="Precio" className="form-control form-control-user" defaultValue={values.precio || ''} onChange={handleChange} />
                                         {
                                             errors.precio && touched.precio ? (
