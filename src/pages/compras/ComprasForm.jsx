@@ -63,30 +63,31 @@ const ComprasForm = () => {
   const updateSelectedMaterials = (index, materialId) => {
     const newSelectedMaterials = [...selectedMaterials];
     newSelectedMaterials[index] = materialId;
-    if(index!=null){
+    if (index != null) {
       setSelectedMaterials(newSelectedMaterials);
     }
-    
+
   };
 
   const alertConfirm = () => {
-      $.confirm({
-        title: `Alerta`,
-        content: `Compra guardada con exito!`,
-        icon: 'fa fa-exclamation-triangle',
-        theme: 'modern',
-        closeIcon: true,
-        animation: 'zoom',
-        closeAnimation: 'scale',
-        animationSpeed: 500,
-        type: 'green',
-        columnClass: 'col-md-6 col-md-offset-3',
-        buttons: {
-          OK: function () { },
-        }
-      });
+    $.confirm({
+      title: `Compra guardada con exito!`,
+      content: "",
+      icon: "fa fa-check",
+      theme: "modern",
+      closeIcon: true,
+      animation: "zoom",
+      closeAnimation: "scale",
+      animationSpeed: 500,
+      type: "green",
+      columnClass: "col-md-6 col-md-offset-3",
+      autoClose: "okay|4000",
+      buttons: {
+        OK: function () { },
+      }
+    });
   };
-  
+
   useEffect(() => {
     calcularTotalGeneral(initialValues.detalles);
   }, []);
@@ -229,29 +230,29 @@ const ComprasForm = () => {
                                     subtotal: "",
                                   });
                                   <>
-                                  {
-                                    selectedMaterials.includes(e.target.value)?(
-                                      $.confirm({
-                                        title: `Alerta`,
-                                        content: `El material seleccionado ya ha sido agregado a esta compra `,
-                                        icon: 'fa fa-exclamation-triangle',
-                                        theme: 'modern',
-                                        closeIcon: true,
-                                        animation: 'zoom',
-                                        closeAnimation: 'scale',
-                                        animationSpeed: 500,
-                                        type: 'orange',
-                                        columnClass: 'col-md-6 col-md-offset-3',
-                                        buttons: {
-                                          OK: function () { },
-                                        }
-                                      }),
-                                      updateSelectedMaterials(null,null),
-                                      arrayHelpers.remove(index)
-                                    ):  (
-                                      updateSelectedMaterials(index, e.target.value)
+                                    {
+                                      selectedMaterials.includes(e.target.value) ? (
+                                        $.confirm({
+                                          title: `Alerta`,
+                                          content: `El material seleccionado ya ha sido agregado a esta compra `,
+                                          icon: 'fa fa-exclamation-triangle',
+                                          theme: 'modern',
+                                          closeIcon: true,
+                                          animation: 'zoom',
+                                          closeAnimation: 'scale',
+                                          animationSpeed: 500,
+                                          type: 'orange',
+                                          columnClass: 'col-md-6 col-md-offset-3',
+                                          buttons: {
+                                            OK: function () { },
+                                          }
+                                        }),
+                                        updateSelectedMaterials(null, null),
+                                        arrayHelpers.remove(index)
+                                      ) : (
+                                        updateSelectedMaterials(index, e.target.value)
                                       )
-                                  }
+                                    }
                                   </>
                                 }}
                               >
