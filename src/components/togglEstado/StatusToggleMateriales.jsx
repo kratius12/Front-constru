@@ -51,7 +51,7 @@ function StatusToggle({id, initialStatus}) {
                                 })
                             } else if (response.status === 205) {
                                 $.confirm({
-                                    title: "No se puede editar el estado del material si el estado de la categoría esta inactivo",
+                                    title: "No se puede editar el estado del material si el estado de la categoría esta inactivo o si su cantidad es 0",
                                     content: "",
                                     icon: 'fa fa-xmark',
                                     theme: 'modern',
