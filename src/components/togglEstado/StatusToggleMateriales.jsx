@@ -23,7 +23,13 @@ function StatusToggle({id, initialStatus}) {
                 confirmar: {
                     btnClass: 'btn-danger',
                     action: async function () {
-                        setStatus(status ? 0 :1)
+                        if(status==1){
+                            setStatus(0)
+                        }else{
+                            setStatus(1)
+                        }
+                        // setStatus(status ? 0 :1)
+                        // setStatus(status ? 1 : 0)
                         const response = await toggleMaterialEstado(id,status)
                         console.log(response.status)
                         // if (entity =='material') {
@@ -44,7 +50,7 @@ function StatusToggle({id, initialStatus}) {
                                         okay: {
                                             btnClass: 'btn btn-default',
                                             action: function () {
-                                                window.location.reload(false);
+                                                window.location.reload(true);
                                             }
                                         }
                                     }
@@ -65,7 +71,7 @@ function StatusToggle({id, initialStatus}) {
                                         okay: {
                                             btnClass: 'btn btn-default',
                                             action: function () {
-                                                window.location.reload(false);
+                                                window.location.reload(true);
                                             }
                                         }
                                     }
@@ -86,7 +92,7 @@ function StatusToggle({id, initialStatus}) {
                                         okay: {
                                             btnClass: 'btn btn-default',
                                             action: function () {
-                                                window.location.reload(false);
+                                                window.location.reload(true);
                                             }
                                         }
                                     }
