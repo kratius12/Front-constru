@@ -63,16 +63,42 @@ const ComprasForm = () => {
   const updateSelectedMaterials = (index, materialId) => {
     const newSelectedMaterials = [...selectedMaterials];
     newSelectedMaterials[index] = materialId;
-    setSelectedMaterials(newSelectedMaterials);
+    if(index!=null){
+      setSelectedMaterials(newSelectedMaterials);
+    }
+    
   };
 
   const handleMaterialSelection = (index, materialId) => {
     if (selectedMaterials.includes(materialId)) {
       console.log("Material already selected");
+      $.confirm({
+        title: `Alerta`,
+        content: `El material seleccionado ya ha sido agregado a esta compra `,
+        icon: 'fa fa-exclamation-triangle',
+        theme: 'modern',
+        closeIcon: true,
+        animation: 'zoom',
+        closeAnimation: 'scale',
+        animationSpeed: 500,
+        type: 'orange',
+        columnClass: 'col-md-6 col-md-offset-3',
+        buttons: {
+          OK: function () { },
+        }
+      });
     } else {
-      updateSelectedMaterials(index, materialId);
+      // Verifica si el material ya está en los detalles de la compra actual
+      const materialAlreadySelected = selectedMaterials.some(detalle => detalle.idMat === materialId);
+      if (!materialAlreadySelected) {
+        // Si el material no está en los detalles, permite su selección
+        
+        updateSelectedMaterials(index, materialId);
+      } else {
+      }
     }
   };
+  
   useEffect(() => {
     calcularTotalGeneral(initialValues.detalles);
   }, []);
@@ -214,15 +240,35 @@ const ComprasForm = () => {
                                     precio: "",
                                     subtotal: "",
                                   });
-                                  handleMaterialSelection(index, e.target.value);
+                                  <>
+                                  {
+                                    selectedMaterials.includes(e.target.value)?(
+                                      $.confirm({
+                                        title: `Alerta`,
+                                        content: `El material seleccionado ya ha sido agregado a esta compra `,
+                                        icon: 'fa fa-exclamation-triangle',
+                                        theme: 'modern',
+                                        closeIcon: true,
+                                        animation: 'zoom',
+                                        closeAnimation: 'scale',
+                                        animationSpeed: 500,
+                                        type: 'orange',
+                                        columnClass: 'col-md-6 col-md-offset-3',
+                                        buttons: {
+                                          OK: function () { },
+                                        }
+                                      }),
+                                      updateSelectedMaterials(null,null),
+                                      arrayHelpers.remove(index)
+                                    ):  (
+                                      updateSelectedMaterials(index, e.target.value)
+                                      )
+                                  }
+                                  </>
                                 }}
                               >
                                 <option value="">Seleccione un material</option>
                                 {materiales
-                                  .filter(
-                                    (material) =>
-                                      !selectedMaterials.includes(material.idMat)
-                                  )
                                   .map((material) => (
                                     <option key={material.idMat} value={material.idMat}>
                                       {material.nombre}

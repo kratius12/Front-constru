@@ -175,10 +175,30 @@ const ObraDetalle = () => {
     }
     const [existingActivities, setExistingActivities] = useState([]);
     const handleMaterialChange = (index, selectedMaterial) => {
-        const updatedList = [...materialesList];
-        updatedList[index].material = selectedMaterial;
-        setMaterialesList(updatedList);
+        // Verificar si el material ya ha sido seleccionado
+        const materialValue = selectedMaterial.value;
+        const isMaterialSelected = materialesList.some((material, i) => i !== index && material.material && material.material.value === materialValue);
+    
+        if (isMaterialSelected) {
+            confirmAlert({
+                title: 'Alerta',
+                message: 'El material ya ha sido seleccionado.',
+                buttons: [
+                    {
+                        label: 'OK',
+                        onClick: () => {
+                            handleEliminarMaterial(index)
+                        }
+                    }
+                ]
+            });
+        } else {
+            const updatedList = [...materialesList];
+            updatedList[index].material = selectedMaterial;
+            setMaterialesList(updatedList);
+        }
     };
+    
 
     const handleCantidadChange = (index, nuevaCantidad) => {
         const nuevosMateriales = [...materialesList];
@@ -860,8 +880,12 @@ const ObraDetalle = () => {
                                                             name={`materiales.${index}`}
                                                             options={materiales}
                                                             value={materialesList[index].material}
-                                                            onChange={(selectedMaterial) => handleMaterialChange(index, selectedMaterial)}
+                                                            onChange={
+                                                                (selectedMaterial) => handleMaterialChange(index, selectedMaterial)
+                                                            
+                                                            }
                                                         />
+                                                       
 
                                                         {materialErrors[index] && materialErrors[index].material && (
                                                             <div className="alert alert-danger mt-2" role="alert">
