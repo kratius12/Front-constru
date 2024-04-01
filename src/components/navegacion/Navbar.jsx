@@ -16,11 +16,11 @@ function Navbar({ handleLogout, userData }) {
                         <span className="mr-2 d-none d-lg-inline text-gray-600 small">
                             {`@${userData.nombres}`}
                         </span>
-                        <img
+                        {/* <img
                             className="img-profile rounded-circle"
                             src={undraw_profile}
                             alt="Profile"
-                        />
+                        /> */}
                     </Dropdown.Toggle>
                     <Dropdown.Menu alignRight>
                         <Dropdown.Item onClick={handleLogoutClick}>
