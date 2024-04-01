@@ -235,6 +235,7 @@ const ObraDetalle = () => {
             buttons: {
                 okay: function () {
                     navigate("/obras")
+                    window.location.reload(true)
                 },
 
             }
