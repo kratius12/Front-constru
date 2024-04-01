@@ -69,34 +69,22 @@ const ComprasForm = () => {
     
   };
 
-  const handleMaterialSelection = (index, materialId) => {
-    if (selectedMaterials.includes(materialId)) {
-      console.log("Material already selected");
+  const alertConfirm = () => {
       $.confirm({
         title: `Alerta`,
-        content: `El material seleccionado ya ha sido agregado a esta compra `,
+        content: `Compra guardada con exito!`,
         icon: 'fa fa-exclamation-triangle',
         theme: 'modern',
         closeIcon: true,
         animation: 'zoom',
         closeAnimation: 'scale',
         animationSpeed: 500,
-        type: 'orange',
+        type: 'green',
         columnClass: 'col-md-6 col-md-offset-3',
         buttons: {
           OK: function () { },
         }
       });
-    } else {
-      // Verifica si el material ya está en los detalles de la compra actual
-      const materialAlreadySelected = selectedMaterials.some(detalle => detalle.idMat === materialId);
-      if (!materialAlreadySelected) {
-        // Si el material no está en los detalles, permite su selección
-        
-        updateSelectedMaterials(index, materialId);
-      } else {
-      }
-    }
   };
   
   useEffect(() => {
