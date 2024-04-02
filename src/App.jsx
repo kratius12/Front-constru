@@ -80,7 +80,7 @@ const CodeModal = ({ isOpen, toggle, onSubmit }) => {
             <label>Se ha enviado un código de confirmación al correo ingresado</label>
             <input
               type="text"
-              placeholder="ingrese su código"
+              placeholder="Ingrese su código"
               className="code form-control"
               value={code}
               onChange={(e) => setCode(e.target.value)}
