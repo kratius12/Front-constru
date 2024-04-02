@@ -4,8 +4,8 @@ import { useMateriales } from "../../context/materiales/MaterialesProvider";
 import axios from 'axios';
 function StatusToggle({id, initialStatus}) {
     const [status, setStatus] = useState(initialStatus)
-
-    const switchInput = status== 1 ? 1 : 0
+    console.log(status);
+    const switchInput = status== 0 ? 0 : 1
     const { toggleMaterialEstado,getMaterial } = useMateriales()
     const handleClick = () => {
         $.confirm({
