@@ -30,7 +30,7 @@ const comprasSchema = Yup.object().shape({
         .required("Precio es requerido")
         .matches(/^\S+$/, 'No se permiten espacios en blanco').matches(/^[0-9]+$/, 'El precio solo puede contener números'),
     })
-  ).min(1, "Debe de ingresar al menos un material"),
+  ),
 });
 
 export default comprasSchema;

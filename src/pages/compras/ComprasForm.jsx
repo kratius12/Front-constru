@@ -40,12 +40,7 @@ const ComprasForm = () => {
     codigoFactura: "",
     total_compra: 0,
     detalles: [
-      {
-        idMat: "",
-        cantidad: "",
-        precio: "",
-        subtotal: "",
-      },
+      
     ],
   };
 
@@ -71,7 +66,7 @@ const ComprasForm = () => {
 
   const alertConfirm = () => {
     $.confirm({
-      title: `Compra guardada con exito!`,
+      title: `Compra guardada con éxito!`,
       content: "",
       icon: "fa fa-check",
       theme: "modern",
@@ -91,10 +86,10 @@ const ComprasForm = () => {
   useEffect(() => {
     calcularTotalGeneral(initialValues.detalles);
   }, []);
+  
   return (
     <div className="container">
       <Formik
-
         initialValues={initialValues}
         validationSchema={comprasSchema}
         enableReinitialize={true}
@@ -104,7 +99,7 @@ const ComprasForm = () => {
           if (validateFact === true) {
             $.confirm({
               title: `Error`,
-              content: `El codigo de factura: ` + values.codigoFactura + ` ya existe, por favor ingrese uno diferente`,
+              content: `El código de factura: ` + values.codigoFactura + ` ya existe, por favor ingrese uno diferente`,
               icon: 'fa fa-circle-xmark',
               theme: 'modern',
               closeIcon: true,
@@ -119,6 +114,27 @@ const ComprasForm = () => {
               }
             })
           } else {
+            if (values.detalles.length === 0) {
+              // Mostrar alerta de confirmación aquí si no hay materiales
+              $.confirm({
+                title: `Error`,
+                content: `No se han ingresado materiales para la compra.`,
+                icon: 'fa fa-exclamation-triangle',
+                theme: 'modern',
+                closeIcon: true,
+                animation: 'zoom',
+                closeAnimation: 'scale',
+                animationSpeed: 500,
+                type: 'red',
+                columnClass: 'col-md-6 col-md-offset-3',
+                buttons: {
+                  OK: function () { },
+                }
+              });
+              setSubmitting(false);
+              return;
+            }
+
             const formData = new FormData();
             formData.append("fecha", values.fecha);
             formData.append("imagen", values.imagen);
@@ -131,7 +147,6 @@ const ComprasForm = () => {
               formData.append(`detalles[${index}][precio]`, detalle.precio);
               formData.append(`detalles[${index}][subtotal]`, detalle.subtotal);
             });
-
 
             try {
               console.log(formData)
