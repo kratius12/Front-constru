@@ -165,6 +165,7 @@ const ObraDetalle = () => {
                 autoClose: 'okay|4000',
                 buttons: {
                     okay: function () {
+                        calcularFechaMaxima()
                         navigate(`/detalleObra/${id}`)
                     },
                 }
