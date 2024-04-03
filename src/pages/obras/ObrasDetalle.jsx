@@ -258,14 +258,16 @@ const ObraDetalle = () => {
     const calcularFechaFinEstimada = (fechaInicio, dias) => {
         const fechaInicioActividad = new Date(fechaInicio);
         const fechaFinEstimada = new Date(fechaInicioActividad.getTime() + (dias * 24 * 60 * 60 * 1000));
-        return fechaFinEstimada.toLocaleDateString(); // Puedes ajustar el formato según lo que necesites
         calcularFechaMaxima()
+        return fechaFinEstimada.toLocaleDateString(); 
+        
     };
 
     const formatoFechaIni = (fechaInicio) => {
         const fechaInicioActividad = new Date(fechaInicio)
-        return fechaInicioActividad.toLocaleDateString()
         calcularFechaMaxima()
+        return fechaInicioActividad.toLocaleDateString()
+        
     }
 
     const [direccionCliemte, setDireccionCliente] = useState("")
