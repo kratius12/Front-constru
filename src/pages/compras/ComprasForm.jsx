@@ -113,27 +113,24 @@ const ComprasForm = () => {
                 },
               }
             })
-          } else {
-            if (values.detalles.length === 0) {
-              // Mostrar alerta de confirmación aquí si no hay materiales
-              $.confirm({
-                title: `Error`,
-                content: `No se han ingresado materiales para la compra.`,
-                icon: 'fa fa-exclamation-triangle',
-                theme: 'modern',
-                closeIcon: true,
-                animation: 'zoom',
-                closeAnimation: 'scale',
-                animationSpeed: 500,
-                type: 'red',
-                columnClass: 'col-md-6 col-md-offset-3',
-                buttons: {
-                  OK: function () { },
-                }
-              });
-              setSubmitting(false);
-              return;
-            }
+          } else if(values.detalles.length === 0){
+            $.confirm({
+              title: `Error`,
+              content: `Debe seleccionar al menos un material`,
+              icon: 'fa fa-circle-xmark',
+              theme: 'modern',
+              closeIcon: true,
+              animation: 'zoom',
+              closeAnimation: 'scale',
+              animationSpeed: 500,
+              type: 'red',
+              columnClass: 'col-md-6 col-md-offset-3',
+              buttons: {
+                Cerrar: function () {
+                },
+              }
+            })
+          }else{
 
             const formData = new FormData();
             formData.append("fecha", values.fecha);
