@@ -44,6 +44,7 @@ const ObrasForm = () => {
       autoClose: 'okay|4000',
       buttons: {
         okay: function () {
+          window.location.reload();
         },
       }
     })

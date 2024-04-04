@@ -8,7 +8,7 @@ function renderObjectProperties(obj, excludedFields = []) {
   return Object.entries(obj)
     .filter(([propKey]) => !excludedFields.includes(propKey))
     .map(([propKey, propValue]) => (
-      propKey ==='idPer' ? '':`${propValue}`
+      propKey === 'idPer' ? '' : `${propValue}`
     ))
     .join(' ');
 }
@@ -41,63 +41,95 @@ const AlertDetail = ({ id, entity, getApi }) => {
     }
     console.log(infoDetail)
     return (
-<form className="user">
-  <div className="row">
-    {Object.entries(infoDetail)
-      .filter(([key]) => !excludedFields.includes(key))
-      .map(([key, value]) => (
-        <div className="col-md-6" key={key}>
-          <div className="form-group">
-            <label htmlFor="">{key === 'rolpermisoempleado' ? 'Permisos del rol':key}</label>
-            {Array.isArray(value) ? (
-              // <div key={value} className="card text-left" style={{ width: '18rem' }}>
-                
-              //   {value.map((item) => (
-              //     <ul className="list-group list-group-flush">
-              //       {Object.entries(item).map(([subKey, subValue]) => (
-              //         <li key={subKey} className="list-group-item">
-              //           <strong>{subKey}:</strong> {renderObjectProperties(subValue)}
-              //         </li>
-              //       ))}
-              //     </ul>
-              //   ))}
-              // </div>
-              value.map((item) => (
-                <>
-                  {Object.entries(item).map(([subKey, subValue]) => (
-                    <>
-                    <label htmlFor={subValue}></label>
-                    <input
-                      type="text"
-                      className="form-control form-control-user"
-                      value={renderObjectProperties(subValue)}
-                      readOnly
-                    />                    
-                    </>
-                  ))}
-                </>
-              ))
-            ): typeof value === 'object'?  (
-              <input 
-              type="text"
-              className="form-control form-control-user"
-              value={renderObjectProperties(value, ['idObra', 'Id', 'idEmp', 'idCli', 'idMat', 'idcat', 'idCliente', 'actividades', 'idRol', 'idPer', 'idEmp'])}
-              readOnly              
-              />
-            ) : (
-              // Si no es un array, muestra el input normal
-              <input
-                type="text"
-                className="form-control form-control-user"
-                value={key === 'estado' ? (text ?? '') : (typeof value === 'string' ? value : JSON.stringify(value))}
-                readOnly
-              />
-            )}
-          </div>
+      <form className="user">
+        <div className="row">
+          {Object.entries(infoDetail)
+            .filter(([key]) => !excludedFields.includes(key))
+            .map(([key, value]) => (
+              <>
+                {key === 'rolpermisoempleado' ? (
+                  <>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <p className='text-center my-2'>Permisos del rol</p>
+                      </div>
+                      {value.map((item) => (
+                        <div className="col-md-3">
+                          <div className="form-group">
+                            {Object.entries(item).map(([subKey, subValue]) => (
+                              <>
+                                <label htmlFor={subValue}></label>
+                                <input
+                                  type="text"
+                                  className="form-control form-control-user"
+                                  value={renderObjectProperties(subValue)}
+                                  readOnly
+                                />
+                              </>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                      <div className="col-md-4" key={key}>
+                        <div className="form-group">
+                          <label htmlFor="">{key === 'rolpermisoempleado' ? 'Permisos del rol' : key}</label>
+                          {Array.isArray(value) ? (
+                            // <div key={value} className="card text-left" style={{ width: '18rem' }}>
+
+                            //   {value.map((item) => (
+                            //     <ul className="list-group list-group-flush">
+                            //       {Object.entries(item).map(([subKey, subValue]) => (
+                            //         <li key={subKey} className="list-group-item">
+                            //           <strong>{subKey}:</strong> {renderObjectProperties(subValue)}
+                            //         </li>
+                            //       ))}
+                            //     </ul>
+                            //   ))}
+                            // </div>
+                            value.map((item) => (
+                              <>
+                                {Object.entries(item).map(([subKey, subValue]) => (
+                                  <>
+                                    <label htmlFor={subValue}></label>
+                                    <input
+                                      type="text"
+                                      className="form-control form-control-user"
+                                      value={renderObjectProperties(subValue)}
+                                      readOnly
+                                    />
+                                  </>
+                                ))}
+                              </>
+                            ))
+                          ) : typeof value === 'object' ? (
+                            <input
+                              type="text"
+                              className="form-control form-control-user"
+                              value={renderObjectProperties(value, ['idObra', 'Id', 'idEmp', 'idCli', 'idMat', 'idcat', 'idCliente', 'actividades', 'idRol', 'idPer', 'idEmp'])}
+                              readOnly
+                            />
+                          ) : (
+                            // Si no es un array, muestra el input normal
+                            <input
+                              type="text"
+                              className="form-control form-control-user"
+                              value={key === 'estado' ? (text ?? '') : (typeof value === 'string' ? value : JSON.stringify(value))}
+                              readOnly
+                            />
+                          )}
+                        </div>
+                      </div>
+                  </>
+                )}
+
+              </>
+            ))}
         </div>
-      ))}
-  </div>
-</form>
+      </form>
     );
   };
 
@@ -116,7 +148,7 @@ const AlertDetail = ({ id, entity, getApi }) => {
       type: 'orange',
       columnClass: 'col-md-8 offset-md-1',
       buttons: {
-        Cerrar: function () {},
+        Cerrar: function () { },
       },
     });
   };
