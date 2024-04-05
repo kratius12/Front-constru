@@ -66,7 +66,7 @@ export default function CategoriasForm() {
       })
       if (response.status === 203) {
         $.confirm({
-          title: `El material ingresado ya existe, por favor intente con uno diferente`,
+          title: `La categoria ingresada ya existe, por favor intente con uno diferente`,
           content: "",
           icon: 'fa fa-x-mark',
           theme: 'modern',
