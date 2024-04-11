@@ -164,8 +164,8 @@ export default function ClientsForm() {
                   navigate("/clientes")
                   alertConfirm("update")
                 } else {
-                  checkEmail(values.email)
-                  checkDoc(values.tipoDoc, values.cedula)
+                  // checkEmail(values.email)
+                  // checkDoc(values.tipoDoc, values.cedula)
                   if (email === false && doc === false) {
                     console.log(email, doc)
                     await createClient(values)
