@@ -116,39 +116,39 @@ export default function ProveedoresForm() {
     })
   }
 
-  const checkDoc = async (tipo, documento) => {
-    try {
-      const response = await fetch(`https://apismovilconstru-production-be9a.up.railway.app/checkDocProv/${documento}/${tipo}/${params.id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      })
-      if (response.status === 203) {
-        $.confirm({
-          title: `El numero y tipo de documento ingresado ya existe`,
-          content: "",
-          icon: 'fa fa-x-mark',
-          theme: 'modern',
-          closeIcon: true,
-          animation: 'zoom',
-          closeAnimation: 'scale',
-          animationSpeed: 500,
-          type: 'red',
-          columnClass: 'col-md-6 col-md-offset-3',
-          buttons: {
-            cerrar: function () {
-            },
-          }
-        })
-        setDoc(true)
-      } else {
-        setDoc(false)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // const checkDoc = async (tipo, documento) => {
+  //   try {
+  //     const response = await fetch(`https://apismovilconstru-production-be9a.up.railway.app/checkDocProv/${documento}/${tipo}/${params.id}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       }
+  //     })
+  //     if (response.status === 203) {
+  //       $.confirm({
+  //         title: `El numero y tipo de documento ingresado ya existe`,
+  //         content: "",
+  //         icon: 'fa fa-x-mark',
+  //         theme: 'modern',
+  //         closeIcon: true,
+  //         animation: 'zoom',
+  //         closeAnimation: 'scale',
+  //         animationSpeed: 500,
+  //         type: 'red',
+  //         columnClass: 'col-md-6 col-md-offset-3',
+  //         buttons: {
+  //           cerrar: function () {
+  //           },
+  //         }
+  //       })
+  //       setDoc(true)
+  //     } else {
+  //       setDoc(false)
+  //     }
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   return (
     <div className="container">
@@ -161,9 +161,8 @@ export default function ProveedoresForm() {
             validateOnChange={true}
             onSubmit={async (values) => {
 
-                checkDoc(values.tipo, values.nit)
                 
-              if (doc === false) {
+              // if (doc === false) {
                 if (params.id) {
                   await updateProveedor(params.id, { ...values, tipo: tipo });
                   navigate("/proveedores");
@@ -175,7 +174,7 @@ export default function ProveedoresForm() {
                   alertConfirm();
 
                 }
-              }
+              // }
             }
 
 
